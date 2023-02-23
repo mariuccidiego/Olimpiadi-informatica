@@ -198,7 +198,7 @@ public class escursione {
         }
         return index;
     }
-
+    
     class Vertice {
         int id;
         boolean visited = false;
