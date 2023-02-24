@@ -8,22 +8,32 @@ public class social {
         // aggiungi codice...
         int[] risposta = new int[N];
 
-        ArrayList<Boolean> bono = new ArrayList<>(N);
+        ArrayList<Boolean> bono = new ArrayList<>();
         
         for(int i=0;i<N;i++){
-            bono.set(i, false);
+            bono.add(false);
         }
 
         boolean fine=false;
 
         while(!fine){
-            int min = Collections.max(V);
-            int indexMin = V.indexOf(min);
-            for(int i=0;i<min;i++){
-                if(i!=indexMin && bono.get(i)==false){
+            int max = Collections.max(V);
+            int indexMax = V.indexOf(max);
+            for(int i=0;i<N;i++){
+                if(i!=indexMax && bono.get(i)==false){
+                    System.out.println(bono.get(i));
+                    System.out.println(max+" "+indexMax);
                     bono.set(i, true);
-                    V.set(indexMin, -1);
-                    risposta[i]=indexMin;
+                    V.set(indexMax, -1);
+                    risposta[i]=indexMax;
+                    System.out.println(V.get(indexMax));
+                }
+                
+            }
+            
+            for(int i=0;i<bono.size();i++){
+                if(bono.stream().allMatch(val -> val == true)){
+                    fine=true;
                 }
             }
         }
@@ -31,6 +41,7 @@ public class social {
         for(int i=0;i<N;i++){
             ris=ris+risposta[i]+" ";
         }
+        System.out.println(ris);
         return ris;
     }
 
@@ -60,15 +71,16 @@ public class social {
             int N = scn.nextInt();
 
             //inserisce tutti i dati di una riga in un array
-            ArrayList<Integer> V = new ArrayList<Integer>(N);
+            ArrayList<Integer> V = new ArrayList<Integer>();
             for (int i = 0; i < N; i++) {
-                V.set(i, scn.nextInt());
+                V.add(scn.nextInt());
+                System.out.println(V.get(i));
             }
 
             social solver = new social();
             String risposta = solver.solve(N, V);
 
-            prnt.format("Case #%d: %d\n", t, risposta);
+            prnt.format("Case #"+t+" "+ risposta);
             fout.flush();
         }
         prnt.close();
