@@ -4,13 +4,14 @@ import java.io.*;
 
 public class escursione {
     static Nodo grafo[];
+    static int massimoSalto=0;
     public int solve(int X, int Y, int[][] V) {
 
         // aggiungi codice...
-        int risposta = 42;
+        //int risposta = 42;
 
         int numeroNodi=X*Y;
-
+        System.out.println(numeroNodi);
         grafo = new Nodo[numeroNodi];
         for(int i=0; i<numeroNodi; i++){
             grafo[i] = new Nodo(i);
@@ -18,91 +19,76 @@ public class escursione {
         int count=0;
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
-                if (j < Y - 1) {
-                    grafo[count].id=V[i][j];
-
-                    count++;
-                }
+                grafo[count].id=V[i][j];
+                //System.out.println(grafo[count]);
+                count++;
             }
         }
-        /* 
+
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
-                for (int k = 0; k < Grafo[i][j].adiacenti.size(); k++) {
-                    // System.out.println("riga "+j+" colonna: "+i+" adiacente: "+ Grafo[i][j].id+"
-                    // con "+Grafo[i][j].adiacenti.get(k).id);
-                    Grafo[i][j].pesi.add(Math.abs(Grafo[i][j].id - Grafo[i][j].adiacenti.get(k).id));
-                    // System.out.println("riga "+j+" colonna: "+i+" adiacente: "+ Grafo[i][j].id+"
-                    // con "+Grafo[i][j].adiacenti.get(k).id+" peso: "+Grafo[i][j].pesi.get(k));
-
-
-                    int da = scn.nextInt();
-                    int a = scn.nextInt();
-                    int peso = Math.abs(Grafo[i][j].id - Grafo[i][j].adiacenti.get(k).id);
+                if (j < Y - 1) {
+                    int da = (i*X)+j+i;
+                    int a = (i*X)+j+1+i;
+                    
+                    System.out.println("da: "+da+" i="+i+" j="+j);
+                    System.out.println("a: "+a);
+                    int peso = Math.abs(V[i][j] - V[i][j+1]);
                     new Arco(da, a, peso);
                     new Arco(a, da, peso);
-
-                }
-            }
-        }
-
-
-        Vertice[][] Grafo = new Vertice[X][Y];
-
-        Vertice[]GrafNonMat = new Vertice[X*Y];
-
-        for (int i = 0; i < X; i++) {
-            for (int j = 0; j < Y; j++) {
-                Vertice g = new Vertice(V[i][j]);
-                Grafo[i][j] = g;
-            }
-        }
-
-        for (int i = 0; i < X; i++) {
-            for (int j = 0; j < Y; j++) {
-                if (j < Y - 1) {
-                    Grafo[i][j].adiacenti.add(Grafo[i][j + 1]);
-                    Grafo[i][j + 1].adiacenti.add(Grafo[i][j]);
-
-                }
-            }
-        }
-
-        for (int i = 0; i < Y; i++) {
-            for (int j = 0; j < X; j++) {
-                if (j < X - 1) {
-                    // System.out.println(j+"<"+X+"----"+i);
-                    Grafo[j][i].adiacenti.add(Grafo[j + 1][i]);
-                    Grafo[j + 1][i].adiacenti.add(Grafo[j][i]);
-                    // System.out.println(Grafo[j+1][i].id);
                 }
             }
         }
 
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
-                for (int k = 0; k < Grafo[i][j].adiacenti.size(); k++) {
-                    // System.out.println("riga "+j+" colonna: "+i+" adiacente: "+ Grafo[i][j].id+"
-                    // con "+Grafo[i][j].adiacenti.get(k).id);
-                    Grafo[i][j].pesi.add(Math.abs(Grafo[i][j].id - Grafo[i][j].adiacenti.get(k).id));
-                    // System.out.println("riga "+j+" colonna: "+i+" adiacente: "+ Grafo[i][j].id+"
-                    // con "+Grafo[i][j].adiacenti.get(k).id+" peso: "+Grafo[i][j].pesi.get(k));
+                if (i < X - 1) {
+                    int da = (i*Y)+j;
+                    int a = (i*Y)+j+Y;
+                    /*System.out.println("da: "+da);
+                    System.out.println("a: "+a);
+                    System.out.println(V[i][j]+"  "+V[i+1][j]);*/
+                    int peso = Math.abs(V[i][j] - V[i+1][j]);
+                    new Arco(da, a, peso);
+                    new Arco(a, da, peso);
                 }
             }
         }
-        int c=0;
-        for (int i = 0; i < X; i++) {
-            for (int j = 0; j < Y; j++) {
-
-                GrafNonMat[c]=Grafo[i][j];
-                GrafNonMat[c].posizione=c;
-                c++;
+        dump();
+        
+        camminiMinimi(grafo[0]);
+        massimoSalto=0;
+        /*for(int i=1;i<grafo.length;i++){
+            int c=grafo[i].costoPercorso-grafo[i-1].costoPercorso;
+            System.out.println(i+": "+c);
+            if(c>massimoSalto){
+                massimoSalto=c;
+                System.out.println(i+"= "+massimoSalto);
             }
-        }
-        System.out.println(dijkstra(GrafNonMat));*/
+        }*/
+        tuttoCammino(grafo[grafo.length-1]);
+        System.out.println(massimoSalto);
 
-        return risposta;
+        System.out.println("-----------");
+        return massimoSalto;
     }
+
+    static void tuttoCammino(Nodo x){
+        //ArrayList<Nodo> finale = new ArrayList<Nodo>();
+        if(x.padre.padre==null){
+
+        }else{
+            int c=x.costoPercorso-x.padre.costoPercorso;
+            if(c>massimoSalto){
+                massimoSalto=c;
+                System.out.println("= "+massimoSalto);
+            }
+            System.out.println("padre="+x.padre.id);
+            tuttoCammino(x.padre);
+        }
+        
+    }
+
 
     static class Nodo implements Comparable<Nodo>{
         int id;
@@ -177,7 +163,6 @@ public class escursione {
             n.costoPercorso = Integer.MAX_VALUE;
             n.padre = null;
         }
-
         // costruzione partenza
         x.costoPercorso = 0;
         PriorityQueue<Nodo> s = new PriorityQueue<>();
@@ -189,6 +174,7 @@ public class escursione {
             for(Arco a: attuale.archi){
                 Nodo vicino = a.a;
                 int nDist = attuale.costoPercorso + a.peso;
+                
                 if( nDist < vicino.costoPercorso ){
                     vicino.costoPercorso = nDist;
                     vicino.padre = attuale;
