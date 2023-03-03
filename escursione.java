@@ -25,11 +25,13 @@ public class escursione {
             }
         }
 
+
+        
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 if (j < Y - 1) {
-                    int da = (i*X)+j+i;
-                    int a = (i*X)+j+1+i;
+                    int da = (i*X)+j;
+                    int a = (i*X)+j+1;
                     
                     System.out.println("da: "+da+" i="+i+" j="+j);
                     System.out.println("a: "+a);
