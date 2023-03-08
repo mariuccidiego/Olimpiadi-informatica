@@ -90,8 +90,10 @@ public class soldatini {
         int T = scn.nextInt();
         for(int t = 1; t <= T; t++) {
             int N = scn.nextInt();
-            String S = scn.next();
-
+            String S = "";
+            for(int i=0;i<N;i++){
+                S+=scn.nextInt()+"";
+            }
             soldatini solver = new soldatini();
             int risposta = solver.solve(N, S);
 
