@@ -60,14 +60,6 @@ public class escursione {
         
         camminiMinimi(grafo[0]);
         massimoSalto=0;
-        /*for(int i=1;i<grafo.length;i++){
-            int c=grafo[i].costoPercorso-grafo[i-1].costoPercorso;
-            System.out.println(i+": "+c);
-            if(c>massimoSalto){
-                massimoSalto=c;
-                System.out.println(i+"= "+massimoSalto);
-            }
-        }*/
         tuttoCammino(grafo[grafo.length-1]);
         System.out.println(massimoSalto);
 
@@ -175,7 +167,7 @@ public class escursione {
             Nodo attuale = s.poll();
             for(Arco a: attuale.archi){
                 Nodo vicino = a.a;
-                int nDist = attuale.costoPercorso + a.peso;
+                int nDist = attuale.costoPercorso > a.peso ? attuale.costoPercorso : a.peso;
                 
                 if( nDist < vicino.costoPercorso ){
                     vicino.costoPercorso = nDist;

@@ -11,6 +11,7 @@ public class reply_metaverse {
 
         for(int i=1; i<V.length;i++){
             quantiG=(int)mcm(quantiG, V[i]);
+            System.out.println(quantiG);
         }
         quantiG+=1;
 
