@@ -30,8 +30,8 @@ public class escursione {
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
                 if (j < Y - 1) {
-                    int da = (i*X)+j;
-                    int a = (i*X)+j+1;
+                    int da = (i*Y)+j;
+                    int a = (i*Y)+j+1;
                     
                     System.out.println("da: "+da+" i="+i+" j="+j);
                     System.out.println("a: "+a);
@@ -167,13 +167,23 @@ public class escursione {
             Nodo attuale = s.poll();
             for(Arco a: attuale.archi){
                 Nodo vicino = a.a;
-                int nDist = attuale.costoPercorso > a.peso ? attuale.costoPercorso : a.peso;
-                
-                if( nDist < vicino.costoPercorso ){
-                    vicino.costoPercorso = nDist;
+                int nDist=0;               
+                if(attuale.costoPercorso > a.peso){
+                    nDist = attuale.costoPercorso;
+                    vicino.padre = attuale;
+                    s.add(vicino);
+                }else{
+                    nDist = a.peso;
                     vicino.padre = attuale;
                     s.add(vicino);
                 }
+
+                
+                /*if( nDist < vicino.costoPercorso ){
+                    vicino.costoPercorso = nDist;
+                    vicino.padre = attuale;
+                    s.add(vicino);
+                }*/
             }
         }
     }

@@ -12,7 +12,7 @@ public class mostra2 {
         this.V=V;
         this.G=G;
         memoria=new int[V.length][G.length];
-        return 0;
+        return ric(0,0);
     }
 
     static int max(int n1, int n2, int n3){
@@ -29,9 +29,34 @@ public class mostra2 {
 
     public int ric(int possV, int possG){
         
+        if(possV>=V.length){
+            return 0;
+        }else if(possG>=G.length){
+            return V.length-possV;
+        }
         
+        if(memoria[possV][possG]!=0){
+            return memoria[possV][possG];
+        }
+
+        int saltato;
+        int nonPreso;
+        int preso;
+
+        int x=0;
+        if(V[possV]<G[possG]){
+            x=2;
+        }else{
+            x=1;
+        }
+        int altro= ric(possV+1,possG+1);
+        preso=x+altro;
+
+        saltato=ric(possV,possG+1);
+        nonPreso=ric(possV+1,possG)+1;
         
-        return 0;
+        memoria[possV][possG]=max(preso, saltato, nonPreso);
+        return memoria[possV][possG];
     }
 
     public void dump(String nome, int m[][],int N, int M){
