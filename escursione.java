@@ -167,8 +167,9 @@ public class escursione {
             Nodo attuale = s.poll();
             for(Arco a: attuale.archi){
                 Nodo vicino = a.a;
-                int nDist=0;               
-                if(attuale.costoPercorso > a.peso){
+                int nDist = attuale.costoPercorso > a.peso ? attuale.costoPercorso : a.peso;
+                
+                /*if(attuale.costoPercorso > a.peso){
                     nDist = attuale.costoPercorso;
                     vicino.padre = attuale;
                     s.add(vicino);
@@ -176,14 +177,14 @@ public class escursione {
                     nDist = a.peso;
                     vicino.padre = attuale;
                     s.add(vicino);
-                }
+                }*/
 
                 
-                /*if( nDist < vicino.costoPercorso ){
+                if( nDist < vicino.costoPercorso ){
                     vicino.costoPercorso = nDist;
                     vicino.padre = attuale;
                     s.add(vicino);
-                }*/
+                }
             }
         }
     }
