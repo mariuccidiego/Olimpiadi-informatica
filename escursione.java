@@ -64,7 +64,7 @@ public class escursione {
         System.out.println(massimoSalto);
 
         System.out.println("-----------");
-        return massimoSalto;
+        return grafo[grafo.length-1].costoPercorso;
     }
 
     static void tuttoCammino(Nodo x){

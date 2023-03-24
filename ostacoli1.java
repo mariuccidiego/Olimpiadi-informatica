@@ -16,22 +16,55 @@ public class ostacoli1 {
         int posizione=0;
         int punteggio=0;
         int ostacoliArivati=0;
-        for(int i=0;i<gara[gara.length-1].secondi;i++){
+        
+        /*for(int i=0;i<gara.length;i++){
             System.out.println("secondo = "+i+"   "+gara[ostacoliArivati].secondi);
             if(gara[i].secondi>=gara[i].distanza){
-                punteggio+=gara[ostacoliArivati].punti;
+                punteggio+=gara[i].punti;
                 int x = ric(gara, posizione, ostacoliArivati, punteggio);
-                if(gara[ostacoliArivati+1].secondi>=gara[ostacoliArivati+1].distanza){
-                    punteggio+=gara[ostacoliArivati].punti;
+                if(gara[i+1].secondi>=gara[i+1].distanza){
+                    punteggio+=gara[i+i].punti;
                     int y = ric(gara, posizione, ostacoliArivati, punteggio);
                 }
             }
+        }*/
+
+
+        return ric(gara, posizione, ostacoliArivati, punteggio, ostacoliArivati, 0);
+    }
+    int ric(Ostacolo[] gara, int posizione, int ostacoliArivati, int punteggio, int massimo, int secondiPassati){
+        System.out.println(punteggio);
+        if(secondiPassati>gara[gara.length-1].secondi){
+            System.out.println("sono arrivato al limite");
+            return 0;
         }
-
-
+        for(int i=ostacoliArivati;i<gara.length-1;i++){
+            int x=0;
+            if(Math.abs(posizione-gara[i+1].distanza)<gara[i+1].distanza){
+                x=ric(gara, posizione, ostacoliArivati, punteggio, massimo, secondiPassati);
+            }
+            
+            if(x>punteggio){
+                punteggio=x;
+            }
+        }
+        
+        if(Math.abs(posizione-gara[ostacoliArivati+1].distanza)<gara[ostacoliArivati+1].distanza){
+            ostacoliArivati+=1;
+            posizione=gara[ostacoliArivati].distanza;
+            punteggio+=gara[ostacoliArivati].punti;
+            secondiPassati=gara[ostacoliArivati].secondi;
+            int x=ric(gara, posizione, ostacoliArivati, punteggio, massimo, secondiPassati);
+            if(x>punteggio){
+                punteggio=x;
+            }
+        }else{
+            return 0;
+        }
         return punteggio;
     }
-    int ric(Ostacolo[] gara, int posizione, int ostacoliArivati, int punteggio){
+/* 
+    int ric2(Ostacolo[] gara, int posizione, int ostacoliArivati, int punteggio){
         int x=punteggio;
         int y=punteggio;
         if(gara[ostacoliArivati].secondi>=gara[ostacoliArivati].distanza){
@@ -49,7 +82,7 @@ public class ostacoli1 {
         }
         
     }
-
+*/
     class Ostacolo implements Comparable<Ostacolo>{
         int distanza=0;
         int punti=0;
