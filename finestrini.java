@@ -5,49 +5,51 @@ import java.io.*;
 public class finestrini {
     public int solve(int N, int[] L, int[] R) {
 
-        // aggiungi codice...
-        int risposta = 0;
+        int costo=0;
 
-        Vertice[][] grafo = new Vertice[N][2];
+        int sc=ric(L, R, 0, 2, 0, true);
+        int dc=ric(L, R, 0, 2, 0, false);
 
-        for(int i=0;i<N;i++){
-            Vertice v = new Vertice(L[i]);
-            grafo[i][0]=v;
-            Vertice v1 = new Vertice(R[i]);
-            grafo[i][1]=v1;
-        }
-        for(int i=0;i<N-1;i++){
-            grafo[i][0].adiacenti.add(grafo[i+1][0]);
-            grafo[i][1].adiacenti.add(grafo[i+1][1]);
-
-            grafo[i+1][0].adiacenti.add(grafo[i][0]);
-            grafo[i+1][1].adiacenti.add(grafo[i][1]);
-
-            grafo[i][0].adiacenti.add(grafo[i+1][1]);
-            grafo[i][1].adiacenti.add(grafo[i+1][0]);
-
-            grafo[i+1][0].adiacenti.add(grafo[i][1]);
-            grafo[i+1][1].adiacenti.add(grafo[i][0]);
-
-            grafo[i][0].pesi.add(grafo[i][0].id);
-            grafo[i][1].pesi.add(grafo[i][1].id);
-
-        }
-
-        return risposta;
+        return max(dc, sc);
     }
 
-    class Vertice {
-        int id;
-        boolean visited = false;
-        ArrayList<Vertice> adiacenti = new ArrayList<>();
-        ArrayList<Integer> pesi = new ArrayList<>();
-        int posizione;
-        
-        
-        public Vertice(int i) {
-            id = i;
+    int max(int dc, int sc){
+        if(sc<dc){
+            return sc;
+        }else{
+            return dc;
         }
+    }
+
+    int ric(int[] L, int[] R, int posizione, int quantoDalCambiare, int costo, boolean verso){
+        if(verso){
+            costo+=1;
+        }else{
+            costo+=1;
+        }
+
+        if(posizione>=R.length-1){
+            return costo;
+        }
+        int dc=0;
+        int sc=0;
+        if(quantoDalCambiare==0){
+            if(verso==true){
+                return ric(L, R, posizione+1, 2, costo, !verso);
+            }else{
+                return ric(L, R, posizione+1, 2, costo, !verso);
+            }
+        }else{
+            if(verso==true){
+                sc=ric(L, R, posizione+1, quantoDalCambiare-1, costo, verso);
+                dc=ric(L, R, posizione+1, 2, costo, !verso);
+            }else{
+                sc=ric(L, R, posizione+1, 2, costo, !verso);
+                dc=ric(L, R, posizione+1, quantoDalCambiare-1, costo, verso);
+            }
+        }
+
+        return costo+max(dc, sc);
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
