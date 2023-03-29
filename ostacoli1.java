@@ -3,6 +3,56 @@ import java.io.*;
 
 public class ostacoli1 {
 
+    Ostacolo[] gara;
+    int[][][] mem;
+
+    public int solve(int N, int L, int D, int[] X, int[] P, int[] S) {
+        gara = new Ostacolo[N];
+        for (int i = 0; i < N; i++) {
+            gara[i] = new Ostacolo(X[i], P[i], S[i]);
+        }
+        mem=new int[N][L+1][D+1];
+        int posizione = 0;
+        int punteggio = 0;
+        int ostacoliArivati = 0;
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j <= L; j++) {
+                for (int k = 0; k <= D; k++) {
+                    mem[i][j][k] = -1;
+                }
+            }
+        }
+
+        return ric(gara, posizione, ostacoliArivati, punteggio, 0);
+    }
+
+    int ric(Ostacolo[] gara, int posizione, int indiceOstacolo, int punteggio, int secondiPassati) {
+        if (indiceOstacolo == gara.length) {
+            return punteggio;
+        }
+
+        if (mem[indiceOstacolo][posizione][secondiPassati] != -1) {
+            return mem[indiceOstacolo][posizione][secondiPassati];
+        }
+
+        int punteggioNonPreso = ric(gara, posizione, indiceOstacolo + 1, punteggio, secondiPassati);
+
+        int punteggioPreso = 0;
+        if (Math.abs(posizione - gara[indiceOstacolo].distanza) <= gara[indiceOstacolo].secondi - secondiPassati) {
+            int nuovaPosizione = gara[indiceOstacolo].distanza;
+            int nuoviSecondiPassati = gara[indiceOstacolo].secondi;
+            punteggioPreso = ric(gara, nuovaPosizione, indiceOstacolo + 1, punteggio + gara[indiceOstacolo].punti, nuoviSecondiPassati);
+        }
+
+        mem[indiceOstacolo][posizione][secondiPassati] = Math.max(punteggioNonPreso, punteggioPreso);
+        return mem[indiceOstacolo][posizione][secondiPassati];
+    }
+
+
+
+
+
     /*Ostacolo[] gara;
 
     public int solve(int N, int L, int D, int[] X, int[] P, int[] S) {
@@ -28,58 +78,11 @@ public class ostacoli1 {
         if (Math.abs(posizione - gara[indiceOstacolo].distanza) <= gara[indiceOstacolo].secondi - secondiPassati) {
             int nuovaPosizione = gara[indiceOstacolo].distanza;
             int nuoviSecondiPassati = gara[indiceOstacolo].secondi;
-            punteggioPreso = ric(gara, nuovaPosizione, indiceOstacolo + 1, punteggio + gara[indiceOstacolo].punti,
-                    nuoviSecondiPassati);
+            punteggioPreso = ric(gara, nuovaPosizione, indiceOstacolo + 1, punteggio + gara[indiceOstacolo].punti, nuoviSecondiPassati);
         }
 
         return Math.max(punteggioNonPreso, punteggioPreso);
     }*/
-
-
-    Ostacolo[] gara;
-
-    public int solve(int N, int L, int D, int[] X, int[] P, int[] S) {
-        gara = new Ostacolo[N];
-        for (int i = 0; i < N; i++) {
-            gara[i] = new Ostacolo(X[i], P[i], S[i]);
-        }
-        int posizione = 0;
-        int punteggio = 0;
-        int ostacoliArivati = 0;
-        int[][][] dp = new int[N][L + 1][N* 1000 + 1];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j <= L; j++) {
-                for (int k = 0; k <= N * 1000; k++) {
-                    dp[i][j][k] = -1;
-                }
-            }
-        }
-
-        return ric(gara, posizione, ostacoliArivati, punteggio, 0, dp);
-    }
-
-    int ric(Ostacolo[] gara, int posizione, int indiceOstacolo, int punteggio, int secondiPassati, int[][][] dp) {
-        if (indiceOstacolo == gara.length) {
-            return punteggio;
-        }
-
-        if (dp[indiceOstacolo][posizione][punteggio] != -1) {
-            return dp[indiceOstacolo][posizione][punteggio];
-        }
-
-        int punteggioNonPreso = ric(gara, posizione, indiceOstacolo + 1, punteggio, secondiPassati, dp);
-
-        int punteggioPreso = 0;
-        if (Math.abs(posizione - gara[indiceOstacolo].distanza) <= gara[indiceOstacolo].secondi - secondiPassati) {
-            int nuovaPosizione = gara[indiceOstacolo].distanza;
-            int nuoviSecondiPassati = gara[indiceOstacolo].secondi;
-            punteggioPreso = ric(gara, nuovaPosizione, indiceOstacolo + 1, punteggio + gara[indiceOstacolo].punti,
-                    nuoviSecondiPassati, dp);
-        }
-
-        dp[indiceOstacolo][posizione][punteggio] = Math.max(punteggioNonPreso, punteggioPreso);
-        return dp[indiceOstacolo][posizione][punteggio];
-    }
 
 
 
