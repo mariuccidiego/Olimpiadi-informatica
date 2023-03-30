@@ -13,13 +13,29 @@ public class finestrini1 {
     
     int ric(String s,int[] L, int[] R, int posizione, int quantoDalCambiare, int costo, boolean verso) {
         if(verso){
-            costo+=L[posizione];
+            if(quantoDalCambiare==0){
+                if(posizione==1){
+                    costo+=L[posizione];
+                }else{
+                    costo+=L[posizione];
+                }
+            }else{
+                costo+=L[posizione];
+            }
         }else{
-            costo+=R[posizione];
+            if(quantoDalCambiare==0){
+                if(posizione==1){
+                    costo+=R[posizione];
+                }else{
+                    costo+=R[posizione];
+                }
+            }else{
+                costo+=R[posizione];
+            }
         }
     
         if (posizione == R.length - 1) {
-            //System.out.println(s+"   c="+costo);
+            System.out.println(s+"   c="+costo);
             return costo;
         }
     
@@ -28,18 +44,18 @@ public class finestrini1 {
     
         if (quantoDalCambiare == 0) {
             if(verso){
-                return ric(s+" "+R[posizione+1],L, R, posizione + 1, 2, costo, !verso);
+                return ric(s+" "+R[posizione+1]+" ("+costo+"),",L, R, posizione + 1, 2, costo, !verso);
             }else{
-                return ric(s+" "+L[posizione+1],L, R, posizione + 1, 2, costo, !verso);
+                return ric(s+" "+L[posizione+1]+" ("+costo+"),",L, R, posizione + 1, 2, costo, !verso);
             }
             
         } else {
             if (verso) {
-                sc = ric(s+" "+L[posizione+1],L, R, posizione + 1, quantoDalCambiare - 1, costo, verso);
-                dc = ric(s+" "+R[posizione+1],L, R, posizione + 1, 2, costo, !verso);
+                sc = ric(s+" "+L[posizione+1]+" ("+costo+"),",L, R, posizione + 1, quantoDalCambiare - 1, costo, verso);
+                dc = ric(s+" "+R[posizione+1]+" ("+costo+"),",L, R, posizione + 1, 2, costo, !verso);
             } else {
-                sc = ric(s+" "+L[posizione+1],L, R, posizione + 1, 2, costo, !verso);
-                dc = ric(s+" "+R[posizione+1],L, R, posizione + 1, quantoDalCambiare - 1, costo, verso);
+                sc = ric(s+" "+L[posizione+1]+" ("+costo+"),",L, R, posizione + 1, 2, costo, !verso);
+                dc = ric(s+" "+R[posizione+1]+" ("+costo+"),",L, R, posizione + 1, quantoDalCambiare - 1, costo, verso);
             }
             return Math.min(dc, sc);
         }

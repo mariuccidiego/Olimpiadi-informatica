@@ -43,9 +43,25 @@ public class finestrini {
     int ric(String s,int[] L, int[] R, int posizione, int quantoDalCambiare, int costo, boolean verso){
         
         if(verso){
-            costo+=L[posizione];
+            if(quantoDalCambiare==0){
+                if(posizione==1){
+                    costo+=L[posizione];
+                }else{
+                    costo+=L[posizione];
+                }
+            }else{
+                costo+=L[posizione];
+            }
         }else{
-            costo+=R[posizione];
+            if(quantoDalCambiare==0){
+                if(posizione==1){
+                    costo+=R[posizione];
+                }else{
+                    costo+=R[posizione];
+                }
+            }else{
+                costo+=R[posizione];
+            }
         }
         //System.out.println(s+"p="+posizione+"   c="+costo+"   v="+verso+" "+costo);
         //System.out.println(costo);
@@ -106,9 +122,25 @@ public class finestrini {
     int ric2(String s,int[] L, int[] R, int posizione, int quantoDalCambiare, int costo, boolean verso){
         
         if(verso){
-            costo+=L[posizione];
+            if(quantoDalCambiare==0){
+                if(posizione==1){
+                    costo+=L[posizione];
+                }else{
+                    costo+=L[posizione];
+                }
+            }else{
+                costo+=L[posizione];
+            }
         }else{
-            costo+=R[posizione];
+            if(quantoDalCambiare==0){
+                if(posizione==1){
+                    costo+=R[posizione];
+                }else{
+                    costo+=R[posizione];
+                }
+            }else{
+                costo+=R[posizione];
+            }
         }
         //System.out.println(s+"p="+posizione+"   c="+costo+"   v="+verso+" "+costo);
        // System.out.println(costo);
