@@ -19,9 +19,9 @@ public class finestrini {
             }
             
         }
-        int sc=ric("",L, R, 0, 2, 0, true);
-        System.out.println("°°°°°");
-        int dc=ric2("",L, R, 0, 2, 0, false);
+        int sc=ric("",L, R, 0, 1, 0, true);
+        //System.out.println("°°°°°");
+        int dc=ric2("",L, R, 0, 1, 0, false);
         System.out.println(sc);
         System.out.println(dc);
 
@@ -47,9 +47,10 @@ public class finestrini {
         }else{
             costo+=R[posizione];
         }
-        System.out.println(s+"p="+posizione+"   c="+costo+"   v="+verso);
-       // System.out.println(costo);
+        //System.out.println(s+"p="+posizione+"   c="+costo+"   v="+verso+" "+costo);
+        //System.out.println(costo);
         if(posizione>=R.length-1){
+            System.out.println("fine");
             return costo;
         }
         if(verso){
@@ -109,7 +110,7 @@ public class finestrini {
         }else{
             costo+=R[posizione];
         }
-        System.out.println(s+"p="+posizione+"   c="+costo+"   v="+verso+" "+mem2[0][posizione]);
+        //System.out.println(s+"p="+posizione+"   c="+costo+"   v="+verso+" "+costo);
        // System.out.println(costo);
         if(posizione>=R.length-1){
             return costo;

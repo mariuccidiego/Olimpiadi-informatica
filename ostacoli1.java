@@ -25,7 +25,7 @@ public class ostacoli1 {
         System.out.println("--------------------------");
         int ris=ric("",gara, posizione, ostacoliArivati,0, punteggio, 0);
         
-        dump(null, mem, N+1, N+1);
+        //dump(null, mem, N+1, N+1);
         
         return ris;
     }
@@ -41,14 +41,14 @@ public class ostacoli1 {
     }
 
     int ric(String s,Ostacolo[] gara, int posizione, int indiceProssimo, int indiceAttuale, int punteggio, int secondiPassati) {
-        System.out.println("sto controllando "+gara[indiceAttuale].punti+"  "+punteggio);
+        //System.out.println("sto controllando "+gara[indiceAttuale].punti+"  "+punteggio);
         System.out.println(s+" T "+indiceProssimo+" "+(indiceProssimo+1));
         if (indiceProssimo >= gara.length || secondiPassati>tempoTotale) {
             return punteggio;
         }
 
         if(mem[indiceAttuale][indiceProssimo] != -1){
-            //System.out.println(s+"avevo salvato il valore "+mem[indiceAttuale][indiceProssimo]);
+            System.out.println(s+"avevo salvato il valore "+mem[indiceAttuale][indiceProssimo]);
             return mem[indiceAttuale][indiceProssimo];
         }
 

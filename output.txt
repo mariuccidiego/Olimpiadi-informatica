@@ -1,1 +1,12 @@
-Case #1: 26
+Case #1: 30
+Case #2: 20
+Case #3: 10
+Case #4: 20
+Case #5: 19
+Case #6: 26
+Case #7: 343
+Case #8: 424
+Case #9: 324
+Case #10: 496
+Case #11: 384
+Case #12: 441
