@@ -21,10 +21,10 @@ public class ostacoliPanfo {
                 memoria[i][j]=-1;
             }   
         }
-        System.out.println(N+" "+L+" "+D+"=========");
+        //System.out.println(N+" "+L+" "+D+"=========");
         int risposta = calcola("", 0, 0, 0, 0, 0);
 
-        dump(null, memoria, N+1, N+1);
+        //dump(null, memoria, N+1, N+1);
 
         return risposta;
     }
