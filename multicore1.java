@@ -36,11 +36,17 @@ public class multicore1 {
                 max = x;
             }
         }
+        
+
         System.out.println("---------");
         return max;
     }
 
-    int ric(String s,int posizione, int soldiSpesi, int possPrev) {
+    
+
+    int ric(String s,int posizione, int soldiSpesi, int salti) {
+
+        
         int nCore=0;
         if (soldiSpesi > budget) {
             return nCore;
@@ -48,18 +54,18 @@ public class multicore1 {
             nCore = lista[posizione][0];
             
         }
-        if(mem[posizione][possPrev]!=-1){
+        /*if(mem[posizione][salti]!=-1){
             //System.out.println(mem[posizione][0]+" == "+(soldiSpesi+lista[possPrev][1]));
             
-            return mem[posizione][possPrev];
-        }
+            return mem[posizione][salti];
+        }*/
         
 
         int max = 0;
         if (posizione != lista.length - 1) {
 
             for (int i = posizione; i < lista.length - 1; i++) {
-                int x = ric(s+" | ",i + 1, soldiSpesi + lista[i + 1][1],posizione);
+                int x = ric(s+" | ",i + 1, soldiSpesi + lista[i + 1][1],salti+1);
                 if (x > max) {
                     max = x;
                 }
@@ -67,7 +73,7 @@ public class multicore1 {
             nCore+=max;
         }
         //System.out.println("salvo = "+nCore+"  "+soldiSpesi);
-        mem[posizione][possPrev]=nCore;
+        mem[posizione][salti]=nCore;
         return nCore;
     }
 

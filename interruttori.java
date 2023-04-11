@@ -6,6 +6,7 @@ public class interruttori {
         int id;
         boolean singolo=false;
         boolean visited=false;
+        int click=0;
         ArrayList<Lampadina> adiacenti = new ArrayList<>();
         public Lampadina(int i){
             id = i;
@@ -38,47 +39,43 @@ public class interruttori {
         for(int i=0; i<B ; i++){
             grafo[ X[i] ].adiacenti.add( grafo[ Y[i] ] );
             grafo[ Y[i] ].adiacenti.add( grafo[ X[i] ] );
-            if(nonSingoli.size()==0){
-                nonSingoli.add(grafo[ X[i] ]);
-            }
-            for(int j=0;j<nonSingoli.size();j++){
-                System.out.println(nonSingoli.size());
-                if(nonSingoli.get(j)!=grafo[X[i]] || nonSingoli.size()==0){
-                    nonSingoli.add(grafo[ X[i] ]);
-                    System.out.println("agg "+grafo[ X[i] ].id);
-                }
-                if(nonSingoli.get(j)!=grafo[Y[i]] || nonSingoli.size()==0){
-                    nonSingoli.add(grafo[ Y[i] ]);
-                    System.out.println("agg "+grafo[ Y[i] ].id);
-                }
-            }
+            
             
 
         }
 
         //dump("grafo",grafo);
-        Lampadina ultimo = new Lampadina(0);
-        int count=0;
-        while(nonSingoli.size()>2){
-            int f=singoli.size();
-            for(int i=0;i<f;i++){
-                for(int j=0;j<singoli.get(i).adiacenti.size();j++){
-                    if(singoli.get(i).adiacenti.get(j).visited==false){
-                        singoli.get(i).adiacenti.get(j).visited=true;
-                        nonSingoli.remove(singoli.get(i).adiacenti.get(j));
-                        singoli.add(singoli.get(i).adiacenti.get(j));
-                        ultimo=singoli.get(i).adiacenti.get(j);
-
-                    }
-
+        
+        LinkedList<Lampadina> coda = new LinkedList<>();
+        for(Lampadina l: grafo){
+            if(l.singolo){
+                l.click = 1;
+                l.visited = true;
+                coda.add( l );
+            }
+        }
+        // System.out.println("  si parte da num nodi "+coda.size());
+        // finché la coda non è vuota
+        while(!coda.isEmpty()){
+            Lampadina inEsame = coda.remove();
+            for(Lampadina prossima : inEsame.adiacenti){
+                if( !prossima.visited ){
+                    prossima.visited = true;
+                    prossima.click = inEsame.click+1;
+                    coda.add(prossima);
                 }
             }
-
-            count++;
         }
-        System.out.println(ultimo.id+" "+count);
+        int maxClick = 0;
+        int maxIndex = -1;
+        for(Lampadina l: grafo){
+            if(l.click>maxClick){
+                maxClick = l.click;
+                maxIndex = l.id;
+            }
+        }
 
-        return "ciao";
+        return maxIndex+" "+maxClick;
     }
    
 
