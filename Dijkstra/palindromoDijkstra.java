@@ -8,7 +8,10 @@ public class palindromoDijkstra {
 
     static class Nodo implements Comparable<Nodo> {
         int id;
-        int costoPercorso;
+        int costoPercorsoA;
+        int costoPercorsoB;
+        String parolaA="";
+        String parolaB="";
         Nodo padre;
         ArrayList<Arco> archi;
 
@@ -22,12 +25,12 @@ public class palindromoDijkstra {
             for (Arco a : archi) {
                 vicini += a;
             }
-            return "{" + id + " 💰:" + costoPercorso + " ↑" + (padre == null ? "-" : padre.id) + "} " + vicini;
+            return "{" + id + " 💰:" + costoPercorsoA + " ↑" + (padre == null ? "-" : padre.id) + "} " + vicini;
         }
 
         @Override
         public int compareTo(Nodo o) {
-            return this.costoPercorso - o.costoPercorso;
+            return this.costoPercorsoA - o.costoPercorsoA;
             // return o.costoPercorso - this.costoPercorso;
         }
     }
@@ -64,11 +67,22 @@ public class palindromoDijkstra {
             grafo[B[i]].archi.add(new Arco(B[i], A[i], L[i]));
         }
 
-        dump();
+        //dump();
 
-        camminiMinimi(grafo[X]);
+        camminiMinimiA(grafo[X]);
+        camminiMinimiB(grafo[Y]);
 
-        return grafo[Y].costoPercorso;
+        //System.out.println(grafo[Y].costoPercorsoA);
+        System.out.println("-------------");
+
+        for(int i=0;i<N;i++){
+            grafo[i].parolaA="";
+            creaParolaA(grafo[i], grafo[i],grafo[X]);
+            System.out.println("- parola  = "+grafo[i].parolaA);
+            //creaParolaB(grafo[Y], grafo[i]);
+        }
+
+        return grafo[Y].costoPercorsoA;
     }
 
     static void dump() {
@@ -77,15 +91,34 @@ public class palindromoDijkstra {
         }
     }
 
-    static void camminiMinimi(Nodo x){
+    void creaParolaA(Nodo partenza,Nodo x,Nodo arrivo){
+        if(x.padre==null){
+            
+        }else{
+            for(int i=0;i<x.padre.archi.size();i++){
+                if(x.padre.archi.get(i).a==x.padre.padre){
+                    arrivo.parolaA+=""+x.padre.archi.get(i).lettera;
+                }
+            }
+            System.out.println("parola ( DA="+partenza.id+" A="+arrivo.id+" ("+x.padre.id+")) = "+arrivo.parolaA);
+            //System.out.println("-");
+            creaParolaA(arrivo, x.padre,partenza);
+        }
+    }
+
+    void creaParolaB(Nodo partenza,Nodo arrivo){
+
+    }
+
+    static void camminiMinimiA(Nodo x){
         // pulizia
         for(Nodo n: grafo){
-            n.costoPercorso = Integer.MAX_VALUE;
+            n.costoPercorsoA = Integer.MAX_VALUE;
             n.padre = null;
         }
 
         // costruzione partenza
-        x.costoPercorso = 0;
+        x.costoPercorsoA = 0;
         PriorityQueue<Nodo> s = new PriorityQueue<>();
         s.add(x);
         
@@ -94,9 +127,36 @@ public class palindromoDijkstra {
             Nodo attuale = s.poll();
             for(Arco a: attuale.archi){
                 Nodo vicino = a.a;
-                int nDist = attuale.costoPercorso + a.peso;
-                if( nDist < vicino.costoPercorso ){
-                    vicino.costoPercorso = nDist;
+                int nDist = attuale.costoPercorsoA + a.peso;
+                if( nDist < vicino.costoPercorsoA ){
+                    vicino.costoPercorsoA = nDist;
+                    vicino.padre = attuale;
+                    s.add(vicino);
+                }
+            }
+        }
+    }
+
+    static void camminiMinimiB(Nodo x){
+        // pulizia
+        for(Nodo n: grafo){
+            n.costoPercorsoB = Integer.MAX_VALUE;
+            n.padre = null;
+        }
+
+        // costruzione partenza
+        x.costoPercorsoB = 0;
+        PriorityQueue<Nodo> s = new PriorityQueue<>();
+        s.add(x);
+        
+        // costruzione della copertura
+        while( !s.isEmpty() ){
+            Nodo attuale = s.poll();
+            for(Arco a: attuale.archi){
+                Nodo vicino = a.a;
+                int nDist = attuale.costoPercorsoB + a.peso;
+                if( nDist < vicino.costoPercorsoB ){
+                    vicino.costoPercorsoB = nDist;
                     vicino.padre = attuale;
                     s.add(vicino);
                 }

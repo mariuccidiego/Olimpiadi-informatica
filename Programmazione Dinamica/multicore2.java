@@ -74,5 +74,7 @@ public class multicore2 {
             prnt.format("Case #%d: %d\n", t, risposta);
             fout.flush();
         }
+        prnt.close();
+        scn.close();
     }
 }

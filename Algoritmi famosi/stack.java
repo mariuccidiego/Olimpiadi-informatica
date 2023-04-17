@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 //import java.lang.*;
 
-public class cestini {
+public class stack {
     public String solve(int N, int M, int Q, String S, char[] type, int[] A, int[] B) {
         // Aggiungi codice se vuoi
 
@@ -71,7 +71,7 @@ public class cestini {
                 //System.out.println(type[i] + " " + A[i] + " " + B[i]);
             }
             System.out.println("------");
-            cestini solver = new cestini();
+            stack solver = new stack();
             String risposta = solver.solve(N, M, Q, S, type, A, B);
 
             prnt.format("Case #%d: %s", t, risposta);

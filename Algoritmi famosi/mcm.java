@@ -1,21 +1,21 @@
 import java.util.*;
 import java.io.*;
 
-public class caramelle {
+public class mcm {
     public long solve(int N, int[] V) {
         long risposta=V[0];
         
 
         ///int ind=1;
         for(int i=1; i<V.length;i++){
-            risposta=(int)mcm(risposta, V[i]);
+            risposta=(int)mcmF(risposta, V[i]);
         }
       
 
 
         return risposta;
     }
-    long mcm(long a, long b){
+    long mcmF(long a, long b){
         long c;
         if(a<b){
             c=b;
@@ -60,7 +60,7 @@ public class caramelle {
                 V[i] = scn.nextInt();
             }
 
-            caramelle solver = new caramelle();
+            mcm solver = new mcm();
             long risposta = solver.solve(N, V);
 
             prnt.format("Case #%d: %d\n", t, risposta);

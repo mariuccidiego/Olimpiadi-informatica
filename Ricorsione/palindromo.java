@@ -4,7 +4,7 @@ import java.io.*;
 
 public class palindromo {
     static Nodo grafo[];
-    ArrayList<String> lunghezze = new ArrayList<String>();
+    ArrayList<String> lunghezze;
 
     static class Nodo implements Comparable<Nodo> {
         int id;
@@ -56,6 +56,7 @@ public class palindromo {
         // aggiungi codice...
         //int risposta = 42;
         grafo = new Nodo[N];
+        lunghezze= new ArrayList<String>();
         for (int i = 0; i < N; i++) {
             grafo[i] = new Nodo(i);
         }
@@ -66,25 +67,27 @@ public class palindromo {
             grafo[B[i]].archi.add(new Arco(B[i], A[i], L[i]));
         }
 
-        dump();
+        //dump();
         ArrayList<Integer> v1 = new ArrayList<Integer>();
         v1.add(X);
         ArrayList<Integer> v2 = new ArrayList<Integer>();
         v2.add(Y);
-        String c = prossimaLettera("",X, Y, v1, v2, "");
+        dump();
+        String c = prossimaLettera("",X, Y, v1, v2, "","","");
         //System.out.println(c);
         int min=Integer.MAX_VALUE;
         if(c.equals("-1")){
             return -1;
         }else{
             for(int i=0;i<lunghezze.size();i++){
-                System.out.println(lunghezze.get(i));
+               
                 if(lunghezze.get(i).length()<min){
                     min=lunghezze.get(i).length();
-                    
+                    System.out.println(lunghezze.get(i));     
                 }
             }
         }
+        System.out.println("-----------------");
         return min;
     }
 
@@ -94,50 +97,68 @@ public class palindromo {
         }
     }
 
-    String prossimaLettera(String sys,int indice1, int indice2, ArrayList<Integer> visitati1, ArrayList<Integer> visitati2,
-            String parola) {
+    String prossimaLettera(String sys,int indice1, int indice2, ArrayList<Integer> visitati1, ArrayList<Integer> visitati2,String parolaA,String parolaB, String parola) {
 
         boolean nienteUguale = true;
-
+        //\String s="";
         for (int i = 0; i < grafo[indice1].archi.size(); i++) {
             for (int j = 0; j < grafo[indice2].archi.size(); j++) {
                 
                 if (grafo[indice1].archi.get(i).lettera == grafo[indice2].archi.get(j).lettera) {
                     // controllo gia passato
-                    System.out.println(sys+grafo[indice1].id+" == "+grafo[indice2].id);
 
                     boolean vb = true;
-                    for (int k = 0; k < visitati1.size(); k++) {
-                        if (grafo[indice1].archi.get(i).a.id == visitati1.get(k)) {
-                            for (int l = 0; l < visitati2.size(); l++) {
-                                if (grafo[indice2].archi.get(j).a.id == visitati2.get(l)) {
-                                    vb = false;
+                    //System.out.println("  l="+visitati1.size()+" "+visitati1.get(visitati1.size()-1));
+                    if(visitati1.size()!=1){
+                        for (int k = 0; k < visitati1.size(); k++) {
+                            if (grafo[indice1].archi.get(i).a.id == visitati1.get(k)) {
+                                for (int l = 0; l < visitati2.size(); l++) {
+                                    if (grafo[indice2].archi.get(j).a.id == visitati2.get(l)) {
+                                        vb = false;
+                                    }
                                 }
                             }
                         }
+                    }else{
+                        System.out.println("---"+indice1+" == "+grafo[indice2].archi.get(j).a.id+" - "+
+                                indice2+" == "+ grafo[indice1].archi.get(i).a.id);
                     }
+                    
 
                     if (vb == true) {
+                        //System.out.println(sys+indice1+" == "+grafo[indice2].archi.get(j).a.id+" - "+
+                        //        indice2+" == "+ grafo[indice1].archi.get(i).a.id);
+                        //System.out.println(s+indice1+" "+indice2);
+                            
                         if (indice1 == grafo[indice2].archi.get(j).a.id &&
                             indice2 == grafo[indice1].archi.get(i).a.id) {
-                            
-                            lunghezze.add("-"+parola + "" + grafo[indice1].archi.get(i).lettera);
-                            return parola + "" + grafo[indice1].archi.get(i).lettera;
+                                //System.out.println("---"+indice1+" == "+grafo[indice2].archi.get(j).a.id+" - "+
+                                //indice2+" == "+ grafo[indice1].archi.get(i).a.id);
+                            lunghezze.add(""+parolaA + "" + grafo[indice1].archi.get(i).lettera+""+parolaB);
+                            return parolaB + "" + grafo[indice1].archi.get(i).lettera+""+parolaB;
                         }
 
                         if (grafo[indice1].archi.get(i).a.id == grafo[indice2].archi.get(j).a.id) {
-                            lunghezze.add("-"+parola + "" + grafo[indice1].archi.get(i).lettera+grafo[indice1].archi.get(i).lettera);
-                            return parola + "" + grafo[indice1].archi.get(i).lettera+grafo[indice1].archi.get(i).lettera;
+                            lunghezze.add(""+parolaA + "" + grafo[indice1].archi.get(i).lettera+grafo[indice1].archi.get(i).lettera+parolaB);
+                            return parolaA + "" + grafo[indice1].archi.get(i).lettera+grafo[indice1].archi.get(i).lettera+""+parolaB;
                         }
 
-                        ArrayList<Integer> visitati1P= visitati1;
-                        ArrayList<Integer> visitati2P= visitati2;
+                        ArrayList<Integer> visitati1P= new ArrayList<>(visitati1);
+                        ArrayList<Integer> visitati2P= new ArrayList<>(visitati2);
                         visitati1P.add(grafo[indice1].archi.get(i).a.id);
                         visitati2P.add(grafo[indice2].archi.get(j).a.id);
-            
                         nienteUguale = false;
-                        parola =parola+""+ prossimaLettera(" | ",grafo[indice1].archi.get(i).a.id, 
-                        grafo[indice2].archi.get(j).a.id, visitati1P, visitati2P, parola+=grafo[indice1].archi.get(i).lettera);
+                        String pA=parolaA+grafo[indice1].archi.get(i).lettera;
+                        String pB= parolaB+grafo[indice1].archi.get(i).lettera;
+                        //System.out.println(sys+pA+pB);
+
+                        parola =parolaA+""+ prossimaLettera(sys+" | ",grafo[indice1].archi.get(i).a.id, 
+                        grafo[indice2].archi.get(j).a.id,
+                        visitati1P,
+                        visitati2P,
+                        pA,
+                        pB,
+                        pA+pB);
                     }
                 }
             }

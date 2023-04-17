@@ -115,5 +115,7 @@ public class ostacoliPanfo {
             prnt.format("Case #%d: %d\n", t, risposta);
             fout.flush();
         }
+        prnt.close();
+        scn.close();
     }
 }
