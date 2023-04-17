@@ -6,7 +6,7 @@ public class interruttori {
         int id;
         boolean singolo=false;
         boolean visited=false;
-        int click=0;
+        int click = 0;
         ArrayList<Lampadina> adiacenti = new ArrayList<>();
         public Lampadina(int i){
             id = i;
@@ -24,28 +24,23 @@ public class interruttori {
         }
     }
 
-
     public String solve(int N, int A, int B, int[] S, int[] X, int[] Y) {
-        ArrayList<Lampadina> nonSingoli = new ArrayList<Lampadina>();
-        ArrayList<Lampadina> singoli = new ArrayList<Lampadina>();
+
         Lampadina grafo[] = new Lampadina[N];
         for(int i=0; i<N ; i++){
             grafo[i] = new Lampadina(i);
         }
         for(int i=0; i<A ; i++){
             grafo[ S[i] ].singolo = true;
-            singoli.add(grafo[S[i]]);
         }
         for(int i=0; i<B ; i++){
             grafo[ X[i] ].adiacenti.add( grafo[ Y[i] ] );
             grafo[ Y[i] ].adiacenti.add( grafo[ X[i] ] );
-            
-            
-
         }
 
-        //dump("grafo",grafo);
-        
+        // dump("grafo",grafo);
+
+        // inserisco i nodi "singolo" in coda
         LinkedList<Lampadina> coda = new LinkedList<>();
         for(Lampadina l: grafo){
             if(l.singolo){
@@ -87,8 +82,8 @@ public class interruttori {
         InputStream fin;
         OutputStream fout;
         if(input_from_file) {
-            fin = new FileInputStream("input.txt");
-            // fin = new FileInputStream("abc_quadri.input33.txt");
+            // fin = new FileInputStream("input.txt");
+            fin = new FileInputStream("interruttori_input_2.txt");
             fout = new FileOutputStream("output.txt");
         } else {
             fin = System.in;
